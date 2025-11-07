@@ -215,6 +215,10 @@
             opacity: 0.8;
         }
 
+		.start-button, .restart-button, .browse-button, .back-button {
+		  pointer-events: auto;
+		}
+
         .screen {
             padding: 40px;
             animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -728,22 +732,26 @@
     function selectOption(optionKey, element) {
         if (isProcessing) return;
         isProcessing = true;
-
         selectedOptions[currentQuestionIndex] = optionKey;
-
         document.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
         element.classList.add('selected');
-
+        optionList.classList.add('pointer-guard');
         setTimeout(() => {
             quizScreen.classList.add('fade-out');
+
             setTimeout(() => {
-                currentQuestionIndex++;
-                quizScreen.classList.remove('fade-out');
-                showQuestion();
-                isProcessing = false;
+            currentQuestionIndex++;
+            quizScreen.classList.remove('fade-out');
+            showQuestion(() => {
+                setTimeout(() => {
+                optionList.classList.remove('pointer-guard');
+                }, 250);
+            });
+
+            isProcessing = false;
             }, 400);
-        }, 500);
-    }
+        }, 200);
+        }
 
     function goBack() {
         if (isProcessing || currentQuestionIndex <= 0) return;
@@ -818,7 +826,7 @@
     }
 
     // 事件监听（★ 统一只用 click；去除原来所有 touchstart 监听，修复 iOS “点不动/误触”）
-    startBtn.addEventListener('click', startQuiz, { passive: true });          /* 原代码有 touchstart + preventDefault，会在某些 iOS 机上造成冲突，已移除。 */ /*  */
+    startBtn.addEventListener('click', startQuiz, { passive: true });
     restartBtn.addEventListener('click', startQuiz, { passive: true });
     backBtn.addEventListener('click', goBack, { passive: true });
 
