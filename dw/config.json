@@ -1,0 +1,22 @@
+{
+  "auth": {
+    "expiryMinutes": 1440,
+    "maxAttemptsPerDay": 6,
+    "lockMinutesAfterFail": 60,
+    "enableDailyLimit": true
+  },
+  "platforms": [
+    {
+      "name": "前往小红书获取",
+      "logo": "",
+      "url": "https://xhslink.com/m/6652OUHVO9f"
+    }
+  ],
+  "navigation": {
+    "xiaohongshuUrl": "https://xhslink.com/m/6652OUHVO9f"
+  },
+  "app": {
+    "name": "动物塑测试",
+    "version": "2.0.0"
+  }
+}
